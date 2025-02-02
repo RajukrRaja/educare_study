@@ -14,12 +14,13 @@ header {
 
   
   .info-item i {
-    font-size: 20px; /* Adjust size */
+    font-size: 15px; /* Adjust size */
   
   }
   
   .main_container {
-    width: 85%;
+    width: 80%;
+
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -42,7 +43,7 @@ header {
   li {
     display: flex;
     align-items: center;
-    font-size: 12px;
+    font-size: 10px;
   color: black;
     font-weight: 500;
     transition: transform 0.3s ease;

@@ -1,139 +1,131 @@
-import React, { useState } from 'react';
-import { FaChevronDown } from 'react-icons/fa';  // Optional for dropdown arrow
-import './NavbarM.css';  // Ensure your CSS handles styling for dropdowns, hover effects, etc.
-import logoImage from '../images/Logo.png';  // Adjust the path based on your file structure
+import React, { useState, useRef, useEffect } from "react";
+import { FaChevronDown } from "react-icons/fa";
+import "./NavbarM.css";
 
+const NavbarM = () => {
+    const [dropdown, setDropdown] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const hamburger = useRef(null);
+    const navbarMenu = useRef(null);
 
-function NavbarM() {
-  const [dropdown, setDropdown] = useState(null); // State for controlling dropdown visibility
+    const toggleDropdown = (index) => {
+        setDropdown(dropdown === index ? null : index);
+    };
 
-  const toggleDropdown = (index) => {
-    setDropdown(dropdown === index ? null : index);  // Toggle dropdown visibility
-  };
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
 
-  return (
-    <header className="navbar">
-     <div className="navbar-logo">
-  <img src={logoImage} alt="Company Logo" className="logo" />
-</div>
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (navbarMenu.current && navbarMenu.current.contains(event.target)) {
+                return; // Click is inside the navbar, do nothing
+            }
+            if (hamburger.current && hamburger.current.contains(event.target)) {
+                return; // Click is inside the hamburger, do nothing
+            }
+            setDropdown(null); // Close all dropdowns
+            setIsMobileMenuOpen(false); // Close mobile menu
+        };
 
-      <nav className="navbar-menu">
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(1)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Home</a>
-          {dropdown === 1 && (
-            <div className="dropdown">
-              <a href="#">Company</a>
-              <a href="#">About Us</a>
-              <a href="#">Our Best Service</a>
-              <a href="#">Portfolio</a>
-              <a href="#">Why Choose Us</a>
-              <a href="#">Help Blog</a>
-              <a href="#">Join With Us</a>
-              <a href="#">Become An Agent</a>
+        document.addEventListener("mousedown", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, []);
+
+    return (
+        <header className="navbar">
+            <div className="hamburger" ref={hamburger} onClick={toggleMobileMenu}>
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
             </div>
-          )}
-        </div>
 
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(2)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Services <FaChevronDown /></a>
-          {dropdown === 2 && (
-            <div className="dropdown">
-              <a href="#">Website Design and Development</a>
-              <a href="#">eCommerce Development</a>
-              <a href="#">Mobile App Development</a>
-              <a href="#">Classified Website Development</a>
-              <a href="#">Web Portal News Paper Development</a>
-              <a href="#">Logo and Graphics Design</a>
-              <a href="#">Website Maintenance</a>
-              <a href="#">Website Template</a>
-              <a href="#">Website Hosting</a>
-              <a href="#">Email Hosting Service</a>
-              <a href="#">Website Registration</a>
-            </div>
-          )}
-        </div>
+            <nav className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`} ref={navbarMenu}>
+                {menuItems.map((item, index) => (
+                    <div
+                        className="navbar-item"
+                        key={index}
+                        onMouseEnter={() => toggleDropdown(index)}
+                        onMouseLeave={() => toggleDropdown(null)}
+                    >
+                        <a href="#">
+                            {item.title} {item.subItems && <FaChevronDown />}
+                        </a>
+                        {dropdown === index && item.subItems && (
+                            <div className="dropdown">
+                                {item.subItems.map((subItem, subIndex) => (
+                                    <a href="#" key={subIndex}>
+                                        {subItem}
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </nav>
+        </header>
+    );
+};
 
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(3)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Software <FaChevronDown /></a>
-          {dropdown === 3 && (
-            <div className="dropdown">
-              <a href="#">Software Development Service</a>
-              <a href="#">Human Resources Management</a>
-              <a href="#">Hospital Management Software</a>
-              <a href="#">Garments ERP</a>
-              <a href="#">Business ERP Software</a>
-              <a href="#">Garments Accessories Manufacturer ERP</a>
-              <a href="#">School Management Software</a>
-              <a href="#">Production Management Software</a>
-              <a href="#">Account & Inventory Management</a>
-              <a href="#">Retail POS Software</a>
-              <a href="#">Hotel Management Software</a>
-              <a href="#">Customer Relationship-CRM</a>
-              <a href="#">Payroll Management Software</a>
-              <a href="#">Document Management System</a>
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(4)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Retail POS <FaChevronDown /></a>
-          {dropdown === 4 && (
-            <div className="dropdown">
-              <a href="#">Retail POS Software</a>
-              <a href="#">Retail-Point Of Sales (POS)- EduCare Account</a>
-              <a href="#">POS Software & App -EduCare Study</a>
-              <a href="#">Restaurant management</a>
-              <a href="#">Pharmacy Management Software</a>
-              <a href="#">Tiles Sanitary POS Software</a>
-              <a href="#">Electronics Shop POS Software</a>
-              <a href="#">Footwear POS Software</a>
-              <a href="#">Cable TV Billing Software</a>
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(5)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Mobile App <FaChevronDown /></a>
-          {dropdown === 5 && (
-            <div className="dropdown">
-              <a href="#">Mobile App Development</a>
-              <a href="#">Online Doctor App Development</a>
-              <a href="#">Online Learning Platform Development</a>
-              <a href="#">EduCare Study -Retail POS App</a>
-              <a href="#">HRM Mobile App</a>
-              <a href="#">FM Radio</a>
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(6)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Digital Marketing <FaChevronDown /></a>
-          {dropdown === 6 && (
-            <div className="dropdown">
-              <a href="#">Email Marketing</a>
-              <a href="#">SMS Marketing</a>
-              <a href="#">Search Engine Optimization (SEO)</a>
-              <a href="#">Social Media Marketing</a>
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-item" onMouseEnter={() => toggleDropdown(7)} onMouseLeave={() => toggleDropdown(null)}>
-          <a href="#">Device <FaChevronDown /></a>
-          {dropdown === 7 && (
-            <div className="dropdown">
-              <a href="#">Biometrics Attendance</a>
-              <a href="#">POS Device</a>
-            </div>
-          )}
-        </div>
-
-        <div className="navbar-item">
-          <a href="#">Contact Us</a>
-        </div>
-      </nav>
-    </header>
-  );
-}
+const menuItems = [
+    {
+        title: "Home",
+        subItems: [
+            "Company", "About Us", "Our Best Service", "Portfolio", "Why Choose Us",
+            "Help Blog", "Join With Us", "Become An Agent"
+        ]
+    },
+    {
+        title: "Services",
+        subItems: [
+            "Website Design and Development", "eCommerce Development", "Mobile App Development", "Classified Website Development",
+            "Web Portal News Paper Development", "Logo and Graphics Design", "Website Maintenance", "Website Template",
+            "Website Hosting", "Email Hosting Service", "Website Registration"
+        ]
+    },
+    {
+        title: "Software",
+        subItems: [
+            "Software Development Service", "Human Resources Management", "Hospital Management Software", "Garments ERP",
+            "Business ERP Software", "Garments Accessories Manufacturer ERP", "School Management Software",
+            "Production Management Software", "Account & Inventory Management", "Retail POS Software",
+            "Hotel Management Software", "Customer Relationship-CRM", "Payroll Management Software",
+            "Document Management System"
+        ]
+    },
+    {
+        title: "Retail POS",
+        subItems: [
+            "Retail POS Software", "Retail-Point Of Sales (POS)- EduCare Account", "POS Software & App -EduCare Study",
+            "Restaurant management", "Pharmacy Management Software", "Tiles Sanitary POS Software",
+            "Electronics Shop POS Software", "Footwear POS Software", "Cable TV Billing Software"
+        ]
+    },
+    {
+        title: "Mobile App",
+        subItems: [
+            "Mobile App Development", "Online Doctor App Development", "Online Learning Platform Development",
+            "EduCare Study -Retail POS App", "HRM Mobile App", "FM Radio"
+        ]
+    },
+    {
+        title: "Digital Marketing",
+        subItems: [
+            "Email Marketing", "SMS Marketing", "Search Engine Optimization (SEO)", "Social Media Marketing"
+        ]
+    },
+    {
+        title: "Device",
+        subItems: [
+            "Biometrics Attendance", "POS Device"
+        ]
+    },
+    {
+        title: "Contact Us"
+    }
+];
 
 export default NavbarM;

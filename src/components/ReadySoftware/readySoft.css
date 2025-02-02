@@ -1,0 +1,118 @@
+:root {
+  --carousel-speed: 20s; /* Adjust the speed of scrolling */
+  --card-width: 300px; /* Width of each slide */
+}
+
+.readysoft-container {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+
+  padding: 20px;
+}
+
+header h1 {
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+header p {
+
+  margin-bottom: 20px;
+}
+
+.carousel-container {
+  overflow: hidden;
+  width: 100%;
+  margin: 20px auto;
+  position: relative;
+
+  border-radius: 15px;
+
+  padding: 10px 0;
+}
+
+.carousel-track {
+  display: flex;
+  width: calc(var(--card-width) * 16); /* Total width (8 items x 2 for infinite) */
+  animation: scroll var(--carousel-speed) linear infinite;
+}
+
+.carousel-slide {
+  width: var(--card-width);
+  flex-shrink: 0;
+  margin: 0 10px;
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover {
+  transform: scale(1.05);
+
+}
+
+.icon-wrapper {
+  font-size: 40px;
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+.learn-more {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.learn-more:hover {
+  text-decoration: underline;
+}
+
+.details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.details-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  text-align: left;
+}
+
+.close-details {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #e74c3c;
+}
+
+footer {
+  margin-top: 40px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Infinite Scroll Animation */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%); /* Move halfway to create loop effect */
+  }
+}

@@ -3,6 +3,8 @@
   position: fixed;
 }
 
+html, body {width: auto!important; overflow-x: hidden!important
+} 
 .App-logo {
   height: 40vmin;
   pointer-events: none;

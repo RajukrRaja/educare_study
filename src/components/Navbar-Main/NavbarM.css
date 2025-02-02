@@ -1,79 +1,255 @@
-/* NavbarM.css */
+
+html, body {width: auto!important; overflow-x: hidden!important
+} 
+/* Navbar Container */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
- 
-    padding: 15px 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #222;
+  color: white;
+
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled {
+  background-color: rgba(34, 34, 34, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo */
+.navbar-logo .logo {
+  height: 50px;
+  width: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar-logo .logo:hover {
+  transform: scale(1.05);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.3s ease-in-out;
+}
+
+.hamburger.active {
+  transform: rotate(90deg);
+}
+
+.hamburger .bar {
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Navbar Menu */
+.navbar-menu {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-item {
+
+  padding: 10px;
+  overflow: hidden;
+}
+
+.navbar-item::before {
+  content: "";
+
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #f4a261;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+}
+
+.navbar-item:hover::before {
+  transform: scaleX(1);
+}
+
+/* Navigation Links */
+.navbar-item a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 15px;
+  transition: color 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar-item a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.1) 100%);
+  transform: translateX(-25%);
+  transition: transform 0.5s linear;
+  pointer-events: none;
+}
+
+.navbar-item a:hover::before {
+  transform: translateX(25%);
+}
+
+/* Dropdown Menu */
+.dropdown {
+position: inherit;
+margin-top: 1cm;
+  top: 100%;
+  left: 0;
+  background-color: rgba(34, 34, 34, 0.95);
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+/* ***THIS IS THE KEY CORRECTION*** */
+.navbar-item:hover .dropdown {  /* Show dropdown on hover of the parent .navbar-item */
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* Dropdown Links */
+.dropdown a {
+  padding: 12px 20px;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  white-space: nowrap;
+
+}
+
+.dropdown a:hover {
+  background-color: #f4a261;
+  color: black;
+}
+
+.dropdown a::after {
+
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  height: 2px;
+  background-color: #f4a261;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: left;
+}
+
+.dropdown a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+      display: flex;
   }
-  
-  .navbar-logo .logo {
-    height: 50px;
-  }
-  
+  /* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #222;
+  color: white;
+
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
   .navbar-menu {
-    display: flex;
-    gap: 25px;
+    
+      top: 0;
+      left: 0;
+    
+      flex-direction: column;
+      background-color: rgba(34, 34, 34, 0.95);
+      padding: 70px 0;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease-in-out;
+      align-items: center;
+      backdrop-filter: blur(10px);
   }
-  
+
+  .navbar-menu.active {
+      transform: translateY(0);
+  }
+
   .navbar-item {
-    position: relative;
-    cursor: pointer;
+      text-align: center;
+      width: 100%;
   }
-  
+
   .navbar-item a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
+      display: block;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
-  .navbar-item a:hover {
-    color: #1abc9c;
+
+  .navbar-item::before {
+      display: none;
   }
-  
-  .icon {
-    margin-left: 8px;
-    font-size: 12px;
+
+  .navbar-item a::before, .navbar-item a::after {
+      display: none;
   }
-  
+
   .dropdown {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    background: white;
-    min-width: 200px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    visibility: hidden;
-    z-index: 100;
+    
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      background: transparent;
   }
-  
-  .navbar-item:hover .dropdown,
-  .navbar-item:focus-within .dropdown {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
+      .dropdown a { /* Style dropdown links on mobile */
+      padding-left: 30px; /* Indent for hierarchy visualization */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator lines */
   }
-  
-  .dropdown a {
-    display: block;
-    padding: 10px 15px;
-    color: #333;
-    font-size: 14px;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  
-  .dropdown a:hover {
-    background: #1abc9c;
-    color: white;
-  }
-  
+}

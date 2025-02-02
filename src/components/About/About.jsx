@@ -45,7 +45,7 @@ const About = () => {
         </div>
         <div className="about-image-container">
           <img
-            src="https://www.samglobaluniversity.ac.in/wp-content/uploads/2024/02/our-mission-1170x700-min.jpg"
+            src="https://st2.depositphotos.com/1594308/10487/i/950/depositphotos_104870148-stock-photo-team-working-at-office.jpg"
             alt="Mission"
             className="about-image"
           />
@@ -55,7 +55,7 @@ const About = () => {
       <div className="about-section">
         <div className="about-image-container">
           <img
-            src="https://online.flipbuilder.com/wxzy/gzvx/shot.png"
+            src="https://img.freepik.com/free-photo/group-people-working-out-business-plan-office_1303-15861.jpg"
             alt="Our Story"
             className="about-image"
           />
