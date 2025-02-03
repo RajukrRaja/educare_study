@@ -1,242 +1,186 @@
+/* Slider Container */
 .slider-container {
-  margin-left: 20cm;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 1680px;
-  max-height: 200vh;
+  position: relative;
   overflow: hidden;
-  border-radius: 15px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-  padding: 35px;
-  background: #dedbdb;
-
-  margin-top: 6.5cm;
+  width: 100%;
+  max-width: 2200px;
+  margin: 0 auto;
 }
 
+/* Slider Wrapper */
 .slider-wrapper {
   display: flex;
+  flex-wrap: nowrap;
   transition: transform 0.5s ease-in-out;
+  width: 100%;
 }
 
+/* Individual Slide */
 .slide {
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-shrink: 0;
-  position: relative;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Slide Left: Image Section */
+.slide-left {
+  flex: 1;
+  padding-right: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.slider-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.slider-header h2 {
-  font-size: 24px;
-  color: #333;
-  margin-top: 50px;
-  margin-left: 0;
-}
-
-.slider-header p {
-  font-size: 16px;
-  color: #666;
-  margin-left: 0;
 }
 
 .slide-image {
-  width: 90%;
-  max-width: 500px;
+  max-width: 100%;
   height: auto;
-  max-height: 350px;
-  object-fit: cover;
-  margin-right: auto;
-  padding: 10px;
+  border-radius: 8px;
+
 }
 
-.caption {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 1.2rem;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 5px 15px;
-  border-radius: 5px;
-}
-
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s ease;
-  border-radius: 50%;
-}
-
-.nav-btn:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: scale(1.1);
-}
-
-.left {
-  left: 10px;
-}
-.slide {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 20px;
-}
-
-.slide-left {
-  flex: 1;
-  max-width: 50%;
-}
-
-.slide-left img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-
+/* Slide Right: Text Section */
 .slide-right {
   flex: 1;
-  max-width: 50%;
+  padding-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 }
 
 .slide-right h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .slide-right p {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #555;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 20px;
 }
 
 .view-more-btn {
-  align-self: flex-start;
-}
-
-.slide-right {
-
-}
-
-.right {
-  right: 10px;
-}
-
-.dots {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-}
-
-.dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 5px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.view-more-btn {
-  display: inline-block;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
   background-color: #007BFF;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .view-more-btn:hover {
   background-color: #0056b3;
-  transform: translateY(-2px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.view-more-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-@media (max-width: 768px) {
-  .view-more-btn {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
-}
-
-.dot.active {
-  background: white;
-  transform: scale(1.2);
-}
-
-.progress-bar {
+/* Navigation Buttons */
+.nav-btn {
   position: absolute;
-  bottom: 5px;
-  left: 0;
-  height: 3px;
-  background: rgb(115, 0, 255);
-  transition: width 0.5s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
 }
 
-.controls {
-  position: absolute;
-  top: 10px;
+.nav-btn.left {
+  left: 10px;
+}
+
+.nav-btn.right {
   right: 10px;
 }
 
+.nav-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Progress Bar */
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  background-color: #007BFF;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Dots Navigation */
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #007BFF;
+}
+/* General Mobile View */
 @media (max-width: 768px) {
-  .slider-container {
-    width: 100%;
+  .slide {
+    flex-direction: column !important; /* Force the layout to stack vertically */
+    text-align: center;
     padding: 10px;
   }
 
+  .slide-left {
+    padding-right: 0 !important; /* Remove any extra padding on mobile */
+    margin-bottom: 20px !important; /* Ensure there's spacing between image and text */
+    width: 100% !important; /* Ensure image section takes the full width */
+  }
+
   .slide-image {
-    max-width: 100%;
+    width: 100% !important; /* Ensure the image takes up full width */
+    height: auto !important;
+    border-radius: 8px !important; /* Keep the border radius */
   }
 
-  .slider-header h2 {
-    font-size: 20px;
+  .slide-right {
+    padding-left: 0 !important; /* Remove left padding on the text section */
+    width: 100% !important; /* Ensure the text section takes the full width */
   }
 
-  .slider-header p {
-    font-size: 14px;
+  .slide-right h3 {
+    font-size: 1.5rem !important; /* Adjust font size for mobile */
+  }
+
+  .slide-right p {
+    font-size: 0.9rem !important; /* Adjust font size for paragraph */
+  }
+
+  .view-more-btn {
+    font-size: 0.9rem !important;
+    padding: 8px 16px !important;
   }
 
   .nav-btn {
-    padding: 8px 12px;
+    padding: 8px !important; /* Adjust padding for nav buttons */
   }
 
-  .caption {
-    font-size: 1rem;
-    padding: 5px 10px;
+  .dot {
+    width: 8px !important; /* Smaller dots for navigation */
+    height: 8px !important;
   }
 }

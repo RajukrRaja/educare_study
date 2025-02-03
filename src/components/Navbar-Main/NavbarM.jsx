@@ -1,131 +1,114 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FaChevronDown } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaBars } from "react-icons/fa"; // Removed FaChevronDown
+import Sidebar from "../sidebar/sidebar";
 import "./NavbarM.css";
+import Logo from "../../components/images/Logo.png"; // Import the logo
 
-const NavbarM = () => {
-    const [dropdown, setDropdown] = useState(null);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const hamburger = useRef(null);
-    const navbarMenu = useRef(null);
-
-    const toggleDropdown = (index) => {
-        setDropdown(dropdown === index ? null : index);
-    };
-
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
-    useEffect(() => {
-        const handleOutsideClick = (event) => {
-            if (navbarMenu.current && navbarMenu.current.contains(event.target)) {
-                return; // Click is inside the navbar, do nothing
-            }
-            if (hamburger.current && hamburger.current.contains(event.target)) {
-                return; // Click is inside the hamburger, do nothing
-            }
-            setDropdown(null); // Close all dropdowns
-            setIsMobileMenuOpen(false); // Close mobile menu
-        };
-
-        document.addEventListener("mousedown", handleOutsideClick);
-
-        return () => {
-            document.removeEventListener("mousedown", handleOutsideClick);
-        };
-    }, []);
-
-    return (
-        <header className="navbar">
-            <div className="hamburger" ref={hamburger} onClick={toggleMobileMenu}>
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-            </div>
-
-            <nav className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`} ref={navbarMenu}>
-                {menuItems.map((item, index) => (
-                    <div
-                        className="navbar-item"
-                        key={index}
-                        onMouseEnter={() => toggleDropdown(index)}
-                        onMouseLeave={() => toggleDropdown(null)}
-                    >
-                        <a href="#">
-                            {item.title} {item.subItems && <FaChevronDown />}
-                        </a>
-                        {dropdown === index && item.subItems && (
-                            <div className="dropdown">
-                                {item.subItems.map((subItem, subIndex) => (
-                                    <a href="#" key={subIndex}>
-                                        {subItem}
-                                    </a>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </nav>
-        </header>
-    );
+const debounce = (func, delay) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
 };
 
-const menuItems = [
-    {
-        title: "Home",
-        subItems: [
-            "Company", "About Us", "Our Best Service", "Portfolio", "Why Choose Us",
-            "Help Blog", "Join With Us", "Become An Agent"
-        ]
-    },
-    {
-        title: "Services",
-        subItems: [
-            "Website Design and Development", "eCommerce Development", "Mobile App Development", "Classified Website Development",
-            "Web Portal News Paper Development", "Logo and Graphics Design", "Website Maintenance", "Website Template",
-            "Website Hosting", "Email Hosting Service", "Website Registration"
-        ]
-    },
-    {
-        title: "Software",
-        subItems: [
-            "Software Development Service", "Human Resources Management", "Hospital Management Software", "Garments ERP",
-            "Business ERP Software", "Garments Accessories Manufacturer ERP", "School Management Software",
-            "Production Management Software", "Account & Inventory Management", "Retail POS Software",
-            "Hotel Management Software", "Customer Relationship-CRM", "Payroll Management Software",
-            "Document Management System"
-        ]
-    },
-    {
-        title: "Retail POS",
-        subItems: [
-            "Retail POS Software", "Retail-Point Of Sales (POS)- EduCare Account", "POS Software & App -EduCare Study",
-            "Restaurant management", "Pharmacy Management Software", "Tiles Sanitary POS Software",
-            "Electronics Shop POS Software", "Footwear POS Software", "Cable TV Billing Software"
-        ]
-    },
-    {
-        title: "Mobile App",
-        subItems: [
-            "Mobile App Development", "Online Doctor App Development", "Online Learning Platform Development",
-            "EduCare Study -Retail POS App", "HRM Mobile App", "FM Radio"
-        ]
-    },
-    {
-        title: "Digital Marketing",
-        subItems: [
-            "Email Marketing", "SMS Marketing", "Search Engine Optimization (SEO)", "Social Media Marketing"
-        ]
-    },
-    {
-        title: "Device",
-        subItems: [
-            "Biometrics Attendance", "POS Device"
-        ]
-    },
-    {
-        title: "Contact Us"
-    }
-];
+const NavbarM = () => {
+  const [dropdown, setDropdown] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isNowMobile = window.innerWidth <= 768;
+      if (isNowMobile !== isMobile) {
+        setIsMobile(isNowMobile);
+        if (!isNowMobile) setIsSidebarOpen(false);
+      }
+    };
+
+    const debouncedResize = debounce(handleResize, 200);
+    window.addEventListener("resize", debouncedResize);
+
+    return () => window.removeEventListener("resize", debouncedResize);
+  }, [isMobile]);
+
+  const toggleDropdown = (index) => {
+    setDropdown(dropdown === index ? null : index);
+  };
+
+  const menuItems = [
+    { title: "Home" },
+    { title: "Services", subItems: ["Website Design", "Mobile App Development"] },
+    { title: "Software", subItems: ["ERP Software", "HRM Software"] },
+    { title: "Retail POS", subItems: ["Retail POS Software", "Restaurant POS"] },
+    { title: "Mobile App", subItems: ["Doctor App", "Education App"] },
+    { title: "Digital Marketing", subItems: ["SEO", "Social Media Marketing"] },
+    { title: "Device", subItems: ["Biometric Attendance", "POS Device"] },
+    { title: "Contact Us" },
+  ];
+
+  return (
+    <div className="navbar-container">
+      <header className="navbar">
+        <div className="content-container">
+          <div className="navbar-logo">
+            <a href="/">
+              <img 
+                src={Logo} 
+                alt="Logo" 
+                className="logo-image" 
+                style={{ height: "40px", width: "auto", marginTop: "0" }} 
+              />
+            </a>
+          </div>
+
+          {/* Sidebar Toggle Button (Only for Mobile) */}
+          {isMobile && (
+            <button
+              className="mobile-menu-toggle"
+              aria-label="Open Menu"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <FaBars />
+            </button>
+          )}
+
+          {/* Navbar Menu */}
+          <nav className={`navbar-menu ${isMobile ? "mobile-view" : ""}`}>
+            {menuItems.map((item, index) => (
+              <div className="navbar-item" key={index}>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (item.subItems) toggleDropdown(index);
+                  }}
+                  aria-expanded={dropdown === index}
+                  aria-haspopup={item.subItems ? "true" : "false"}
+                >
+                  {item.title}
+                </a>
+                {dropdown === index && item.subItems && (
+                  <div className="dropdown">
+                    {item.subItems.map((subItem, subIndex) => (
+                      <a href="#" key={subIndex}>
+                        {subItem}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Sidebar Component (Only for Mobile) */}
+      {isMobile && (
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} menuItems={menuItems} />
+      )}
+    </div>
+  );
+};
 
 export default NavbarM;
